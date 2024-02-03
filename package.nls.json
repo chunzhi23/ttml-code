@@ -1,0 +1,4 @@
+{
+	"displayName": "TTML support",
+	"description": "Provides syntax highlighting, bracket matching & snippets in TTML files."
+}

@@ -1,0 +1,20 @@
+{
+	"ttml doc": {
+      "scope": "ttml",
+      "prefix": "ttml",
+		"isFileTemplate": true,
+		"body": [
+      "<tt xml:lang=\"en\" xmlns=\"http://www.w3.org/ns/ttml\">",
+      "\t<head>",
+      "\t\t<metadata>",
+      "\t\t\t<ttm:title>${1:title}</ttm:title>",
+      "\t\t</metadata>",
+      "\t</head>",
+      "\t<body>",
+      "\t$0",
+      "\t</body>",
+      "</tt>"
+		],
+		"description": "TTML Document"
+	}
+}

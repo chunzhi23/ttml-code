@@ -1,0 +1,54 @@
+{
+  "name": "ttml",
+  "displayName": "TTML",
+  "description": "TTML support and debugger for Visual Studio Code",
+  "version": "0.0.1",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "scripts": {
+    "update-grammar": "node ./build/update-grammar.mjs"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "ttml",
+        "icon": {
+          "light": "./icons/ttml-logo.png",
+          "dark": "./icons/ttml-logo.png"
+        },
+        "aliases": [
+          "TTML",
+          "ttml"
+        ],
+        "extensions": [
+          ".ttml",
+          ".dfxp",
+          ".xml"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "ttml",
+        "scopeName": "source.ttml",
+        "path": "./syntaxes/ttml.tmLanguage.json"
+      }
+    ],
+    "snippets": [
+      {
+        "language": "ttml",
+        "path": "./snippets/ttml.code-snippets"
+      }
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chunzhi23/ttml-vscode.git"
+  }
+}

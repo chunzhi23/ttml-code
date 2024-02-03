@@ -1,0 +1,354 @@
+{
+  "information_for_contributors": [
+    "If you want to provide a fix or improvement, please create a pull request against the original repository.",
+    "Once accepted there, we are happy to receive an update request."
+  ],
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "version": "",
+  "name": "ttml",
+  "scopeName": "source.ttml",
+  "patterns": [
+		{
+			"include": "#comment"	
+		},
+		{
+			"include": "#tags-valid"
+		},
+		{
+			"include": "#tags-invalid"
+		}
+  ],
+  "repository": {
+		"attribute": {
+			"patterns": [
+				{
+					"begin": "xml:(id|lang|space)(?![\\w:-])",
+					"beginCaptures": {
+						"0": {
+							"name": "entity.other.attribute-name.ttml"
+						}
+					},
+					"comment": "TTML Core Attributes",
+					"end": "(?=\\s*+[^=\\s])",
+					"name": "meta.attribute.$1.ttml",
+					"patterns": [
+						{
+							"include": "#attribute-interior"
+						}
+					]
+				},
+				{
+					"begin": "region(?![\\w:-])",
+					"beginCaptures": {
+						"0": {
+							"name": "entity.other.attribute-name.ttml"
+						}
+					},
+					"comment": "TTML Layout",
+					"end": "(?=\\s*+[^=\\s])",
+					"name": "meta.attribute.$1.ttml",
+					"patterns": [
+						{
+							"include": "#attribute-interior"
+						}
+					]
+				},
+				{
+					"begin": "ttm:(agent|role)(?![\\w:-])",
+					"beginCaptures": {
+						"0": {
+							"name": "entity.other.attribute-name.ttml"
+						}
+					},
+					"comment": "TTML Metadata Attributes",
+					"end": "(?=\\s*+[^=\\s])",
+					"name": "meta.attribute.$1.ttml",
+					"patterns": [
+						{
+							"include": "#attribute-interior"
+						}
+					]
+				},
+				{
+					"begin": "ttp:(cellResolution|clockMode|dropMode|frameRate|frameRateMultiplier|markerMode|pixelAspectRatio|profile|subFrameRate|tickRate|timeBase)(?![\\w:-])",
+					"beginCaptures": {
+						"0": {
+							"name": "entity.other.attribute-name.ttml"
+						}
+					},
+					"comment": "TTML Parameter Attributes",
+					"end": "(?=\\s*+[^=\\s])",
+					"name": "meta.attribute.$1.ttml",
+					"patterns": [
+						{
+							"include": "#attribute-interior"
+						}
+					]
+				},
+				{
+					"begin": "style(?![\\w:-])",
+					"beginCaptures": {
+						"0": {
+							"name": "entity.other.attribute-name.ttml"
+						}
+					},
+					"comment": "TTML Styling",
+					"end": "(?=\\s*+[^=\\s])",
+					"name": "meta.attribute.$1.ttml",
+					"patterns": [
+						{
+							"include": "#attribute-interior"
+						}
+					]
+				},
+				{
+					"begin": "tts:(backgroundColor|color|direction|display(Align)?|extent|font(Family|Size|Style|Weight)|lineHeight|opacity|origin|overflow|padding|showBackground|text(Align|Decoration|Outline)|unicodeBidi|visibility|wrapOption|writingMode|zIndex)(?![\\w:-])",
+					"beginCaptures": {
+						"0": {
+							"name": "entity.other.attribute-name.ttml"
+						}
+					},
+					"comment": "TTML Styling Attributes",
+					"end": "(?=\\s*+[^=\\s])",
+					"name": "meta.attribute.$1.ttml",
+					"patterns": [
+						{
+							"include": "#attribute-interior"
+						}
+					]
+				},
+				{
+					"begin": "begin|dur|end|timeContainer(?![\\w:-])",
+					"beginCaptures": {
+						"0": {
+							"name": "entity.other.attribute-name.ttml"
+						}
+					},
+					"comment": "TTML Timing Attributes",
+					"end": "(?=\\s*+[^=\\s])",
+					"name": "meta.attribute.$1.ttml",
+					"patterns": [
+						{
+							"include": "#attribute-interior"
+						}
+					]
+				},
+				{
+					"begin": "xmlns(.*?)(?![\\w:-])",
+					"beginCaptures": {
+						"0": {
+							"name": "entity.other.attribute-name.ttml"
+						}
+					},
+					"comment": "XMLNS Binding",
+					"end": "(?=\\s*+[^=\\s])|$",
+					"name": "meta.attribute.xmlns.ttml",
+					"patterns": [
+						{
+							"include": "#attribute-interior"
+						}
+					]
+				}				
+			]
+		},
+		"attribute-interior": {
+			"patterns": [
+				{
+					"begin": "=",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.separator.key-value.ttml"
+						}
+					},
+					"end": "(?<=[^\\s=])(?!\\s*=)|(?=/?>)",
+					"patterns": [
+						{
+							"match": "([^\\s\"'=<>`/]|/(?!>))+",
+							"name": "string.unquoted.ttml"
+						},
+						{
+							"begin": "\"",
+							"beginCaptures": {
+								"0": {
+									"name": "punctuation.definition.string.begin.ttml"
+								}
+							},
+							"end": "\"",
+							"endCaptures": {
+								"0": {
+									"name": "punctuation.definition.string.end.ttml"
+								}
+							},
+							"name": "string.quoted.double.ttml",
+							"patterns": [
+								{
+									"include": "#entities"
+								}
+							]
+						},
+						{
+							"begin": "'",
+							"beginCaptures": {
+								"0": {
+									"name": "punctuation.definition.string.begin.ttml"
+								}
+							},
+							"end": "'",
+							"endCaptures": {
+								"0": {
+									"name": "punctuation.definition.string.end.ttml"
+								}
+							},
+							"name": "string.quoted.single.ttml",
+							"patterns": [
+								{
+									"include": "#entities"
+								}
+							]
+						},
+						{
+							"match": "=",
+							"name": "invalid.illegal.unexpected-equals-sign.ttml"
+						}
+					]
+				}
+			]
+		},
+		"entities": {
+			"patterns": [
+				{
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.entity.ttml"
+						},
+						"3": {
+							"name": "punctuation.definition.entity.ttml"
+						}
+					},
+					"match": "(&)#[0-9]+(;)",
+					"name": "constant.character.entity.numeric.decimal.ttml"
+				},
+				{
+					"captures": {
+						"1": {
+							"name": "punctuation.definition.entity.ttml"
+						},
+						"3": {
+							"name": "punctuation.definition.entity.ttml"
+						}
+					},
+					"match": "(&)#[xX][0-9a-fA-F]+(;)",
+					"name": "constant.character.entity.numeric.hexadecimal.ttml"
+				},
+				{
+					"match": "&(?=[a-zA-Z0-9]+;)",
+					"name": "invalid.illegal.ambiguous-ampersand.ttml"
+				}
+			]
+		},
+		"comment": {
+			"begin": "<!--",
+			"captures": {
+				"0": {
+					"name": "punctuation.definition.comment.html"
+				}
+			},
+			"end": "-->",
+			"name": "comment.block.html",
+			"patterns": [
+				{
+					"match": "\\G-?>",
+					"name": "invalid.illegal.characters-not-allowed-here.html"
+				},
+				{
+					"match": "<!--(?!>)|<!-(?=-->)",
+					"name": "invalid.illegal.characters-not-allowed-here.html"
+				},
+				{
+					"match": "--!>",
+					"name": "invalid.illegal.characters-not-allowed-here.html"
+				}
+			]
+		},
+		"tags-invalid": {
+			"patterns": [
+				{
+					"begin": "(</?)((\\w[^\\s>]*))(?<!/)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.tag.begin.ttml"
+						},
+						"2": {
+							"name": "entity.name.tag.ttml"
+						},
+						"3": {
+							"name": "invalid.illegal.unrecognized-tag.ttml"
+						}
+					},
+					"end": "((?: ?/)?>)",
+					"endCaptures": {
+						"1": {
+							"name": "punctuation.definition.tag.end.ttml"
+						}
+					},
+					"name": "meta.tag.other.$2.ttml",
+					"patterns": [
+						{
+							"include": "#attribute"
+						}
+					]
+				}
+			]
+		},
+    "tags-valid": {
+			"patterns": [
+				{
+					"begin": "(?i)(<)(set|body|div|p|span|br|tt|head|layout|region|metadata|ttm:(actor|agent|copyright|desc|name|title)|ttp:(profile|features|feature|extension(s)?)|styling|style)(?=\\s|/?>)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.tag.begin.ttml"
+						},
+						"2": {
+							"name": "entity.name.tag.ttml"
+						}
+					},
+					"end": "/?>",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.tag.end.ttml"
+						}
+					},
+					"name": "meta.tag.object.$2.void.ttml",
+					"patterns": [
+						{
+							"include": "#attribute"
+						}
+					]
+				},
+				{
+					"begin": "(?i)(</)(set|body|div|p|span|br|tt|head|layout|region|metadata|ttm:(actor|agent|copyright|desc|name|title)|ttp:(profile|features|feature|extension(s)?)|styling|style)(?=\\s|/?>)",
+					"beginCaptures": {
+						"1": {
+							"name": "punctuation.definition.tag.begin.ttml"
+						},
+						"2": {
+							"name": "entity.name.tag.ttml"
+						}
+					},
+					"end": ">",
+					"endCaptures": {
+						"0": {
+							"name": "punctuation.definition.tag.end.ttml"
+						}
+					},
+					"name": "meta.tag.object.$2.void.ttml",
+					"patterns": [
+						{
+							"include": "#attribute"
+						}
+					]
+				}
+			]
+		}
+  }
+}
