@@ -1,4 +1,4 @@
-import { ElementDescription } from "../descDataProvider";
+import { ElementDescription } from "../dataProvider";
 
 export function getElementDescriptions(): ElementDescription[] {
   // Read element descriptions from file or any other source

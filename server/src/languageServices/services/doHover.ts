@@ -3,7 +3,7 @@ import { TextDocument } from "vscode-languageserver-textdocument";
 import {
   getTagHover,
   getAttributeHover,
-} from "../languageFacts/descDataProvider";
+} from "../languageFacts/dataProvider";
 import { findNodeAtPosition } from "../ttmlLanguageService";
 import { TTMLNode } from "../ttmlLanguageTypes";
 
