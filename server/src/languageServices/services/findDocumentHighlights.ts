@@ -1,5 +1,6 @@
-import { Position, TextDocument } from "vscode-languageserver";
-import { TTMLNode } from "../ttmlLanguageService";
+import { Position } from "vscode-languageserver";
+import { TextDocument } from "vscode-languageserver-textdocument";
+import { TTMLNode } from "../ttmlLanguageTypes";
 
 export function findTTMLDocumentHighlights(
   document: TextDocument,

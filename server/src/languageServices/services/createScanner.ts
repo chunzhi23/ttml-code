@@ -1,13 +1,5 @@
 import { TextDocument } from "vscode-languageserver-textdocument";
-
-interface TTMLToken {
-  type: string;
-  value: string;
-  range: {
-    start: { line: number; character: number };
-    end: { line: number; character: number };
-  };
-}
+import { TTMLToken } from "../ttmlLanguageTypes";
 
 export function createTTMLScanner(document: TextDocument): TTMLToken[] {
   const text = document.getText();

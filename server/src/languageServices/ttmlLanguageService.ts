@@ -1,6 +1,5 @@
 import { TextDocument } from "vscode-languageserver-textdocument";
 import { Position } from 'vscode-languageserver-types';
-
 import { createTTMLScanner } from "./services/createScanner";
 import { doTTMLCompletion } from "./services/doCompletion";
 import { doTTMLHover } from "./services/doHover";
@@ -13,25 +12,10 @@ import { findTTMLDocumentSymbols } from "./services/findDocumentSymbols";
 import { getTTMLFoldingRanges } from "./services/getFoldingRanges";
 import { getTTMLSelectionRanges } from "./services/getSelectionRanges";
 import { doTTMLTagComplete } from "./services/doTagComplete";
+import { TTMLNode } from "./ttmlLanguageTypes";
 
 interface Options {
   customDataProviders?: any; // Adjust type as per your actual data provider
-}
-
-export interface TTMLNode {
-  tag: string;
-  start: Position;
-  end: Position;
-  endTagStart: number;
-  attributes: { [name: string]: string };
-  children: TTMLNode[];
-}
-
-export interface TTMLSymbol {
-  name: string;
-  start: Position;
-  end: Position;
-  // Additional metadata if needed
 }
 
 export function getLanguageService(options?: Options) {

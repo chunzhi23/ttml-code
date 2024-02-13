@@ -31,30 +31,7 @@ function extractTagName(textBeforeCursor: string): string {
 function provideTagCompletionItems(): CompletionItem[] {
   // List of TTML tags for completion
   const ttmlTags = [
-    "ttp:profile",
-    "ttp:features",
-    "ttp:feature",
-    "ttp:extensions",
-    "ttp:extension",
-    "tt",
-    "head",
-    "body",
-    "div",
-    "p",
-    "span",
-    "br",
-    "styling",
-    "style",
-    "layout",
-    "region",
-    "set",
-    "metadata",
-    "ttm:title",
-    "ttm:desc",
-    "ttm:copyright",
-    "ttm:agent",
-    "ttm:name",
-    "ttm:actor",
+    "ttp:profile", "ttp:features", "ttp:feature", "ttp:extensions", "ttp:extension", "tt", "head", "body", "div", "p", "span", "br", "styling", "style", "layout", "region", "set", "metadata", "ttm:title", "ttm:desc", "ttm:copyright", "ttm:agent", "ttm:name", "ttm:actor"
   ];
 
   // Create completion items for TTML tags

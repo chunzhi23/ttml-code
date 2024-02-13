@@ -1,8 +1,8 @@
 import { Position, Range } from "vscode-languageserver";
 import { TextDocument } from "vscode-languageserver-textdocument";
-import { TTMLNode, findNodeAtPosition } from "../ttmlLanguageService";
-
+import { findNodeAtPosition } from "../ttmlLanguageService";
 import { parseTTMLDocumentAsNode } from "./parseDocument";
+import { TTMLNode } from "../ttmlLanguageTypes";
 
 export function getTTMLSelectionRanges(document: TextDocument, positions: Position[]): Range[] {
   const root: TTMLNode = parseTTMLDocumentAsNode(document);

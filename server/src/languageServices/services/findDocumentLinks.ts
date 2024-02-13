@@ -1,6 +1,6 @@
-import { Position, Range } from "vscode-languageserver";
+import { Position } from "vscode-languageserver";
 import { TextDocument } from "vscode-languageserver-textdocument";
-import { TTMLNode } from "../ttmlLanguageService";
+import { TTMLNode } from "../ttmlLanguageTypes";
 
 export interface Link {
   start: Position;

@@ -1,8 +1,7 @@
 import { Position } from "vscode-languageserver";
 import { TextDocument } from "vscode-languageserver-textdocument";
 import { DOMParser } from "xmldom";
-
-import { TTMLNode } from "../ttmlLanguageService"
+import { TTMLNode } from "../ttmlLanguageTypes";
 
 interface ParsedTTMLElement {
   tagName: string;

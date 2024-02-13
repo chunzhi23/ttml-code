@@ -6,9 +6,8 @@ import {
 } from "vscode-languageserver";
 import { getLanguageService as getTTMLLanguageService } from "./languageServices/ttmlLanguageService";
 import { TextDocument } from "vscode-languageserver-textdocument";
-import { getLanguageModelCache } from "./languageModelCache";
 
-interface LanguageMode {
+export interface LanguageMode {
   getId(): string;
   doValidation?: (document: TextDocument) => Diagnostic[];
   doComplete?: (document: TextDocument, position: Position) => CompletionList;
@@ -29,13 +28,11 @@ export interface LanguageModes {
   dispose(): void;
 }
 
-interface LanguageModeRange extends Range {
+export interface LanguageModeRange extends Range {
   mode: LanguageMode | undefined;
   attributeValue?: boolean;
 }
 
 export function getLanguageModes(): LanguageModes {
   const ttmlLanguageService = getTTMLLanguageService();
-
-  
 }

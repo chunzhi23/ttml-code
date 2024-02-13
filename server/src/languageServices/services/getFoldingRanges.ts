@@ -1,8 +1,7 @@
-import { Position, Range } from "vscode-languageserver"; // Assuming you have types defined in a separate file
+import { Range } from "vscode-languageserver"; // Assuming you have types defined in a separate file
 import { TextDocument } from "vscode-languageserver-textdocument";
-
-import { TTMLNode } from "../ttmlLanguageService";
 import { parseTTMLDocumentAsNode } from "./parseDocument";
+import { TTMLNode } from "../ttmlLanguageTypes";
 
 export function getTTMLFoldingRanges(document: TextDocument): Range[] {
   const rootNode: TTMLNode = parseTTMLDocumentAsNode(document); // You need to implement parseTTMLDocumentAsNode function

@@ -1,14 +1,7 @@
 import { Range } from "vscode-languageserver";
 import { TextDocument } from 'vscode-languageserver-textdocument';
-
 import { parseTTMLDocumentAsNode } from "./parseDocument";
-import { TTMLNode, TTMLSymbol } from '../ttmlLanguageService';
-
-interface Symbol {
-  name: string;
-  kind: string;
-  range: Range; // Adjusted to use Range type
-}
+import { TTMLNode, TTMLSymbol } from "../ttmlLanguageTypes";
 
 export function findTTMLDocumentSymbols(document: TextDocument): TTMLSymbol[] {
   const symbols: TTMLSymbol[] = [];
@@ -33,7 +26,7 @@ export function findTTMLDocumentSymbols(document: TextDocument): TTMLSymbol[] {
   return symbols;
 }
 
-function isSymbol(obj: any): obj is Symbol {
+function isSymbol(obj: any): obj is TTMLSymbol {
   return (
     obj &&
     typeof obj.name === "string" &&

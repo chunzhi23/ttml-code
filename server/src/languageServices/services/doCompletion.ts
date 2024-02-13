@@ -4,7 +4,6 @@ import {
   CompletionList,
 } from "vscode-languageserver";
 import { TextDocument } from "vscode-languageserver-textdocument";
-
 import { parseTTMLDocument } from "./parseDocument";
 
 export function doTTMLCompletion(
@@ -67,53 +66,7 @@ function generateCompletionItems(completionContext: string): CompletionItem[] {
   // Add completion items for attributes
   if (completionContext === "attribute") {
     const attributeNames = [
-      "xml:id",
-      "xml:lang",
-      "xml:space",
-      "region",
-      "ttm:agent",
-      "ttm:role",
-      "ttp:cellResolution",
-      "ttp:clockMode",
-      "ttp:dropMode",
-      "ttp:frameRate",
-      "ttp:frameRateMultiplier",
-      "ttp:markerMode",
-      "ttp:pixelAspectRatio",
-      "ttp:profile",
-      "ttp:subFrameRate",
-      "ttp:tickRate",
-      "ttp:timeBase",
-      "style",
-      "tts:backgroundColor",
-      "tts:color",
-      "tts:direction",
-      "tts:display",
-      "tts:displayAlign",
-      "tts:extent",
-      "tts:fontFamily",
-      "tts:fontSize",
-      "tts:fontStyle",
-      "tts:fontWeight",
-      "tts:lineHeight",
-      "tts:opacity",
-      "tts:origin",
-      "tts:overflow",
-      "tts:padding",
-      "tts:showBackground",
-      "tts:textAlign",
-      "tts:textDecoration",
-      "tts:textOutline",
-      "tts:unicodeBidi",
-      "tts:visibility",
-      "tts:wrapOption",
-      "tts:writingMode",
-      "tts:zIndex",
-      "begin",
-      "dur",
-      "end",
-      "timeContainer",
-      "xmlns",
+      "xml:id", "xml:lang", "xml:space", "region", "ttm:agent", "ttm:role", "ttp:cellResolution", "ttp:clockMode", "ttp:dropMode", "ttp:frameRate", "ttp:frameRateMultiplier", "ttp:markerMode", "ttp:pixelAspectRatio", "ttp:profile", "ttp:subFrameRate", "ttp:tickRate", "ttp:timeBase", "style", "tts:backgroundColor", "tts:color", "tts:direction", "tts:display", "tts:displayAlign", "tts:extent", "tts:fontFamily", "tts:fontSize", "tts:fontStyle", "tts:fontWeight", "tts:lineHeight", "tts:opacity", "tts:origin", "tts:overflow", "tts:padding", "tts:showBackground", "tts:textAlign", "tts:textDecoration", "tts:textOutline", "tts:unicodeBidi", "tts:visibility", "tts:wrapOption", "tts:writingMode", "tts:zIndex", "begin", "dur", "end", "timeContainer", "xmlns"
     ];
 
     for (const attributeName of attributeNames) {
@@ -127,30 +80,7 @@ function generateCompletionItems(completionContext: string): CompletionItem[] {
   // Add completion items for tags
   if (completionContext.startsWith("tag")) {
     const tagNames = [
-      "set",
-      "body",
-      "div",
-      "p",
-      "span",
-      "br",
-      "tt",
-      "head",
-      "layout",
-      "region",
-      "metadata",
-      "ttm:actor",
-      "ttm:agent",
-      "ttm:copyright",
-      "ttm:desc",
-      "ttm:name",
-      "ttm:title",
-      "ttp:profile",
-      "ttp:features",
-      "ttp:feature",
-      "ttp:extension",
-      "ttp:extensions",
-      "styling",
-      "style",
+      "set", "body", "div", "p", "span", "br", "tt", "head", "layout", "region", "metadata", "ttm:actor", "ttm:agent", "ttm:copyright", "ttm:desc", "ttm:name", "ttm:title", "ttp:profile", "ttp:features", "ttp:feature", "ttp:extension", "ttp:extensions", "styling", "style",
     ];
 
     for (const tagName of tagNames) {

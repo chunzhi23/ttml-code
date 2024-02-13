@@ -1,11 +1,11 @@
 import { Position, Range } from "vscode-languageserver";
 import { TextDocument } from "vscode-languageserver-textdocument";
-
 import {
   getTagHover,
   getAttributeHover,
 } from "../languageFacts/descDataProvider";
-import { TTMLNode, findNodeAtPosition, isPositionInRange } from "../ttmlLanguageService";
+import { findNodeAtPosition } from "../ttmlLanguageService";
+import { TTMLNode } from "../ttmlLanguageTypes";
 
 function parseDocument(document: TextDocument): TTMLNode {
   const rootNode: TTMLNode = {
@@ -46,7 +46,10 @@ export async function doTTMLHover(
   return null;
 }
 
-function getTagNameRange(document: TextDocument, position: Position): Range | null {
+function getTagNameRange(
+  document: TextDocument,
+  position: Position
+): Range | null {
   const text = document.getText();
   let start = position.character;
   let end = position.character;
@@ -94,13 +97,17 @@ export function getAttributeAtPosition(
   for (const attributeName in node.attributes) {
     if (Object.prototype.hasOwnProperty.call(node.attributes, attributeName)) {
       const attributeValue = node.attributes[attributeName];
-      const attributeStart = document.offsetAt(node.start) + node.tag.length + 1;
+      const attributeStart =
+        document.offsetAt(node.start) + node.tag.length + 1;
       const attributeEnd = attributeStart + attributeName.length;
 
       // Check if the cursor position falls within the attribute
       if (cursor >= attributeStart && cursor <= attributeEnd) {
         // Calculate the distance from the cursor to the attribute
-        const distance = Math.min(Math.abs(cursor - attributeStart), Math.abs(cursor - attributeEnd));
+        const distance = Math.min(
+          Math.abs(cursor - attributeStart),
+          Math.abs(cursor - attributeEnd)
+        );
 
         // Update the closest attribute if this one is closer
         if (distance < minDistance) {
