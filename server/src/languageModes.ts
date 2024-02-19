@@ -4,7 +4,7 @@ import {
   Position,
   Range,
 } from "vscode-languageserver";
-import { getLanguageService as getTTMLLanguageService } from "./languageServices/ttmlLanguageService";
+import { getLanguageService as getTTMLLanguageService } from "./umd/ttmlLanguageService";
 import { TextDocument } from "vscode-languageserver-textdocument";
 
 export interface LanguageMode {

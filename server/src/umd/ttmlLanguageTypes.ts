@@ -26,6 +26,45 @@ export interface TTMLToken {
     end: { line: number; character: number };
   };
 }
+export declare enum TokenType {
+  StartCommentTag = 0,
+  Comment = 1,
+  EndCommentTag = 2,
+  StartTagOpen = 3,
+  StartTagClose = 4,
+  StartTagSelfClose = 5,
+  StartTag = 6,
+  EndTagOpen = 7,
+  EndTagClose = 8,
+  EndTag = 9,
+  DelimiterAssign = 10,
+  AttributeName = 11,
+  AttributeValue = 12,
+  Content = 13,
+  Whitespace = 14,
+  Unknown = 15,
+  EOS = 16
+}
+export declare enum ScannerState {
+  WithinContent = 0,
+  AfterOpeningStartTag = 1,
+  AfterOpeningEndTag = 2,
+  WithinTag = 3,
+  WithinEndTag = 4,
+  WithinComment = 5,
+  AfterAttributeName = 6,
+  BeforeAttributeValue = 7
+}
+export interface Scanner {
+  scan(): TokenType;
+  getTokenType(): TokenType;
+  getTokenOffset(): number;
+  getTokenLength(): number;
+  getTokenEnd(): number;
+  getTokenText(): string;
+  getTokenError(): string | undefined;
+  getScannerState(): ScannerState;
+}
 export interface ITagData {
   name: string;
   description?: string;

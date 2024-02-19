@@ -12,13 +12,29 @@ import { findTTMLDocumentSymbols } from "./services/findDocumentSymbols";
 import { getTTMLFoldingRanges } from "./services/getFoldingRanges";
 import { getTTMLSelectionRanges } from "./services/getSelectionRanges";
 import { doTTMLTagComplete } from "./services/doTagComplete";
-import { ITTMLDataProvider, TTMLNode } from "./ttmlLanguageTypes";
+import { ITTMLDataProvider, Scanner, TTMLNode } from "./ttmlLanguageTypes";
 
+export interface LanguageService {
+  createScanner(input: string, initialOffset?: number): Scanner;
+  parseHTMLDocument(document: TextDocument): HTMLDocument;
+  findDocumentHighlights(document: TextDocument, position: Position, htmlDocument: HTMLDocument): DocumentHighlight[];
+  doComplete(document: TextDocument, position: Position, htmlDocument: HTMLDocument, options?: CompletionConfiguration): CompletionList;
+  setCompletionParticipants(registeredCompletionParticipants: ICompletionParticipant[]): void;
+  doHover(document: TextDocument, position: Position, htmlDocument: HTMLDocument): Hover | null;
+  format(document: TextDocument, range: Range | undefined, options: HTMLFormatConfiguration): TextEdit[];
+  findDocumentLinks(document: TextDocument, documentContext: DocumentContext): DocumentLink[];
+  findDocumentSymbols(document: TextDocument, htmlDocument: HTMLDocument): SymbolInformation[];
+  doTagComplete(document: TextDocument, position: Position, htmlDocument: HTMLDocument): string | null;
+  getFoldingRanges(document: TextDocument, context?: {
+      rangeLimit?: number;
+  }): FoldingRange[];
+  getSelectionRanges(document: TextDocument, positions: Position[]): SelectionRange[];
+}
 export interface LanguageServiceOptions {
   customDataProviders?: ITTMLDataProvider[];
 }
 
-export function getLanguageService(options?: LanguageServiceOptions) {
+export function getLanguageService(options?: LanguageServiceOptions): LanguageService {
   if (options && options.customDataProviders) {
     // Implement your custom data provider handling here
   }
