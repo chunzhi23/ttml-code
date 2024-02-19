@@ -151,7 +151,7 @@ const _LFD = "\f".charCodeAt(0);
 const _WSP = " ".charCodeAt(0);
 const _TAB = "\t".charCodeAt(0);
 
-export function createScanner(
+export function createTTMLScanner(
   input: string,
   initialOffset = 0,
   initialState: ScannerState = ScannerState.WithinContent,
