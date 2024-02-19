@@ -1,6 +1,6 @@
 import { TextDocument } from "vscode-languageserver-textdocument";
 import { Position } from 'vscode-languageserver-types';
-import { createTTMLScanner } from "./services/createScanner";
+import { createScanner } from "./services/createScanner";
 import { doTTMLCompletion } from "./services/doCompletion";
 import { doTTMLHover } from "./services/doHover";
 import { formatTTML } from "./services/format";
@@ -40,7 +40,7 @@ export function getLanguageService(options?: LanguageServiceOptions): LanguageSe
   }
 
   return {
-    createScanner: createTTMLScanner,
+    createScanner,
     parseTTMLDocument: parseTTMLDocument,
     doComplete: doTTMLCompletion,
     setCompletionParticipants: setTTMLCompletionParticipants,
