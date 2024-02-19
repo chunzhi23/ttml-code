@@ -12,13 +12,13 @@ import { findTTMLDocumentSymbols } from "./services/findDocumentSymbols";
 import { getTTMLFoldingRanges } from "./services/getFoldingRanges";
 import { getTTMLSelectionRanges } from "./services/getSelectionRanges";
 import { doTTMLTagComplete } from "./services/doTagComplete";
-import { TTMLNode } from "./ttmlLanguageTypes";
+import { ITTMLDataProvider, TTMLNode } from "./ttmlLanguageTypes";
 
-interface Options {
-  customDataProviders?: any; // Adjust type as per your actual data provider
+export interface LanguageServiceOptions {
+  customDataProviders?: ITTMLDataProvider[];
 }
 
-export function getLanguageService(options?: Options) {
+export function getLanguageService(options?: LanguageServiceOptions) {
   if (options && options.customDataProviders) {
     // Implement your custom data provider handling here
   }
