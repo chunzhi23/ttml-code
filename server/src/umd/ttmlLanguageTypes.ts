@@ -1,18 +1,22 @@
-import { Position } from "vscode-languageserver";
+import { Location } from "vscode-languageserver";
 
 export interface TTMLNode {
-  tag: string;
-  start: Position;
-  end: Position;
-  endTagStart: number;
-  attributes: { [name: string]: string };
+  tag: string | undefined;
+  start: number;
+  startTagEnd: number | undefined;
+  end: number;
+  endTagStart: number | undefined;
   children: TTMLNode[];
+  parent?: TTMLNode;
+  attributes?: {
+      [name: string]: string | null;
+  } | undefined;
 }
 export interface TTMLSymbol {
   name: string;
-  start: Position;
-  end: Position;
-  // Additional metadata if needed
+  location: Location;
+  containerName: string;
+  kind: number;
 }
 export interface TTMLToken {
   type: string;
