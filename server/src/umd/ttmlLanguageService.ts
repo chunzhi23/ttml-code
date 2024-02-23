@@ -1,4 +1,4 @@
-import { createScanner } from "./services/createScanner";
+import { createScanner } from "./services/ttmlScanner";
 import { TTMLParser } from "./parser/ttmlParser";
 
 import { CompletionList, DocumentHighlight, DocumentLink, FoldingRange, Hover, ITTMLDataProvider, LanguageServiceOptions, Position, Scanner, SelectionRange, SymbolInformation, TTMLDocument, TTMLNode, TextDocument } from "./ttmlLanguageTypes";

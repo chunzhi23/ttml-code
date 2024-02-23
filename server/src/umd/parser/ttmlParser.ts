@@ -1,5 +1,5 @@
 import { TTMLDataManager } from "../languageFacts/dataManager";
-import { createScanner } from "../services/createScanner";
+import { createScanner } from "../services/ttmlScanner";
 import { TextDocument, TokenType } from "../ttmlLanguageTypes";
 import { findFirst } from "../utils/arrays";
 
