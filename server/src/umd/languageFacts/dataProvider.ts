@@ -1,38 +1,90 @@
-import { getElementDescriptions } from "./data/ttmlTags";
+import {
+  ITagData,
+  IAttributeData,
+  IValueData,
+  TTMLDataV1,
+  ITTMLDataProvider,
+} from "../ttmlLanguageTypes";
 
-export interface AttributeDescription {
-  name: string;
-  description: string;
-}
+export class TTMLDataProvider implements ITTMLDataProvider {
+  isApplicable() {
+    return true;
+  }
 
-export interface ElementDescription {
-  name: string;
-  description: string;
-  attributes: AttributeDescription[];
-}
+  private _tags: ITagData[] = [];
+  private _tagMap: { [t: string]: ITagData } = {};
+  private _globalAttributes: IAttributeData[];
+  private _valueSetMap: { [setName: string]: IValueData[] } = {};
 
-export function getTagHover(tagName: string): string | null {
-  const elementDescriptions = getElementDescriptions();
-  const description = elementDescriptions.find(
-    (element) => element.name === tagName
-  );
-  return description ? formatHover(description.description) : null;
-}
+  constructor(private readonly id: string, customData: TTMLDataV1) {
+    this._tags = customData.tags || [];
+    this._globalAttributes = customData.globalAttributes || [];
 
-export function getAttributeHover(attributeName: string): string | null {
-  const elementDescriptions = getElementDescriptions();
-  for (const element of elementDescriptions) {
-    const attribute = element.attributes.find(
-      (attr) => attr.name === attributeName
-    );
-    if (attribute) {
-      return formatHover(attribute.description);
+    this._tags.forEach((t) => {
+      this._tagMap[t.name.toLowerCase()] = t;
+    });
+
+    if (customData.valueSets) {
+      customData.valueSets.forEach((vs) => {
+        this._valueSetMap[vs.name] = vs.values;
+      });
     }
   }
-  return null;
-}
 
-function formatHover(description: string): string {
-  // Format the hover text as needed
-  return description;
+  getId() {
+    return this.id;
+  }
+
+  provideTags() {
+    return this._tags;
+  }
+
+  provideAttributes(tag: string) {
+    const attributes: IAttributeData[] = [];
+    const processAttribute = (a: IAttributeData) => {
+      attributes.push(a);
+    };
+
+    const tagEntry = this._tagMap[tag.toLowerCase()];
+    if (tagEntry) {
+      tagEntry.attributes.forEach(processAttribute);
+    }
+    this._globalAttributes.forEach(processAttribute);
+
+    return attributes;
+  }
+
+  provideValues(tag: string, attribute: string) {
+    const values: IValueData[] = [];
+
+    attribute = attribute.toLowerCase();
+
+    const processAttributes = (attributes: IAttributeData[]) => {
+      attributes.forEach((a) => {
+        if (a.name.toLowerCase() === attribute) {
+          if (a.values) {
+            a.values.forEach((v) => {
+              values.push(v);
+            });
+          }
+
+          if (a.valueSet) {
+            if (this._valueSetMap[a.valueSet]) {
+              this._valueSetMap[a.valueSet].forEach((v) => {
+                values.push(v);
+              });
+            }
+          }
+        }
+      });
+    };
+
+    const tagEntry = this._tagMap[tag.toLowerCase()];
+    if (tagEntry) {
+      processAttributes(tagEntry.attributes);
+    }
+    processAttributes(this._globalAttributes);
+
+    return values;
+  }
 }

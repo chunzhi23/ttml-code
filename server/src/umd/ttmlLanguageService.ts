@@ -1,22 +1,13 @@
-import { TextDocument } from "vscode-languageserver-textdocument";
-import { Position } from 'vscode-languageserver-types';
 import { createScanner } from "./services/createScanner";
-import { doTTMLCompletion } from "./services/doCompletion";
-import { doTTMLHover } from "./services/doHover";
-import { formatTTML } from "./services/format";
-import { parseTTMLDocument } from "./services/parseDocument";
-import { setTTMLCompletionParticipants } from "./services/setCompletionParticipants";
-import { findTTMLDocumentHighlights } from "./services/findDocumentHighlights";
-import { findTTMLDocumentLinks } from "./services/findDocumentLinks";
-import { findTTMLDocumentSymbols } from "./services/findDocumentSymbols";
-import { getTTMLFoldingRanges } from "./services/getFoldingRanges";
-import { getTTMLSelectionRanges } from "./services/getSelectionRanges";
-import { doTTMLTagComplete } from "./services/doTagComplete";
-import { ITTMLDataProvider, Scanner, TTMLNode } from "./ttmlLanguageTypes";
+import { TTMLParser } from "./parser/ttmlParser";
+
+import { CompletionList, DocumentHighlight, DocumentLink, FoldingRange, Hover, ITTMLDataProvider, LanguageServiceOptions, Position, Scanner, SelectionRange, SymbolInformation, TTMLDocument, TTMLNode, TextDocument } from "./ttmlLanguageTypes";
+import { TTMLDataManager } from "./languageFacts/dataManager";
 
 export interface LanguageService {
+  setDataProviders(useDefaultDataProvider: boolean, customDataProviders: ITTMLDataProvider[]): void;
   createScanner(input: string, initialOffset?: number): Scanner;
-  parseHTMLDocument(document: TextDocument): HTMLDocument;
+  parseTTMLDocument(document: TextDocument): TTMLDocument;
   findDocumentHighlights(document: TextDocument, position: Position, htmlDocument: HTMLDocument): DocumentHighlight[];
   doComplete(document: TextDocument, position: Position, htmlDocument: HTMLDocument, options?: CompletionConfiguration): CompletionList;
   setCompletionParticipants(registeredCompletionParticipants: ICompletionParticipant[]): void;
@@ -30,18 +21,18 @@ export interface LanguageService {
   }): FoldingRange[];
   getSelectionRanges(document: TextDocument, positions: Position[]): SelectionRange[];
 }
-export interface LanguageServiceOptions {
-  customDataProviders?: ITTMLDataProvider[];
-}
 
-export function getLanguageService(options?: LanguageServiceOptions): LanguageService {
-  if (options && options.customDataProviders) {
-    // Implement your custom data provider handling here
-  }
+const defaultLanguageServiceOptions = {};
+
+export function getLanguageService(options: LanguageServiceOptions = defaultLanguageServiceOptions): LanguageService {
+  const dataManager = new TTMLDataManager(options);
+
+  const ttmlParser = new TTMLParser(dataManager);
 
   return {
+    setDataProviders: dataManager.setDataProviders.bind(dataManager),
     createScanner,
-    parseTTMLDocument: parseTTMLDocument,
+    parseTTMLDocument: ttmlParser.parseDocument.bind(ttmlParser),
     doComplete: doTTMLCompletion,
     setCompletionParticipants: setTTMLCompletionParticipants,
     doHover: doTTMLHover,
@@ -53,38 +44,4 @@ export function getLanguageService(options?: LanguageServiceOptions): LanguageSe
     getSelectionRanges: getTTMLSelectionRanges,
     doTagComplete: doTTMLTagComplete,
   };
-}
-
-export function isPositionInRange(position: Position, start: Position, end: Position): boolean {
-  if (position.line < start.line || position.line > end.line) {
-    return false;
-  }
-  if (position.line === start.line && position.character < start.character) {
-    return false;
-  }
-  if (position.line === end.line && position.character > end.character) {
-    return false;
-  }
-  return true;
-}
-
-export function findNodeAtPosition(
-  document: TextDocument,
-  position: Position,
-  rootNode: TTMLNode
-): TTMLNode | null {
-  return findNode(rootNode, position);
-}
-
-function findNode(node: TTMLNode, position: Position): TTMLNode | null {
-  if (isPositionInRange(position, node.start, node.end)) {
-    for (const childNode of node.children) {
-      const foundNode = findNode(childNode, position);
-      if (foundNode) {
-        return foundNode;
-      }
-    }
-    return node;
-  }
-  return null;
 }
